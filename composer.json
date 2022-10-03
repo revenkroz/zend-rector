@@ -1,0 +1,58 @@
+{
+    "name": "revenkroz/zend-rector",
+    "type": "rector-extension",
+    "license": "MIT",
+    "description": "Rector upgrades rules for Zend",
+    "keywords": [
+        "Upgrade",
+        "Zend"
+    ],
+    "require": {
+        "php": "^7.2",
+        "rector/rector": "^0.14.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "dev-master",
+        "phpunit/phpunit": "^9.5.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Revenkroz\\ZendRector\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Revenkroz\\ZendRector\\Tests\\": "tests"
+        },
+        "classmap": [
+            "stubs"
+        ]
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "rector/extension-installer": true,
+            "cweagans/composer-patches": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "scripts": {
+        "lint": [
+            "@php-cs",
+            "@lint-composer",
+            "@lint-rector"
+        ],
+        "fix": [
+            "@php-cs-fix",
+            "@rector"
+        ],
+        "lint-rector": "@php vendor/bin/rector process --dry-run",
+        "rector": "@php vendor/bin/rector process",
+        "lint-composer": "@composer validate --strict",
+        "phpstan": "@php vendor/bin/phpstan analyze",
+        "php-cs": "@php vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+        "php-cs-fixer": "@php vendor/bin/php-cs-fixer fix",
+        "test": "@php vendor/bin/phpunit"
+    }
+}
