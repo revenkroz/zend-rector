@@ -26,9 +26,9 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - php-version: '8.1'
+                    - php-version: '7.2'
                       dependency-versions: 'lowest'
-                    - php-version: '8.1'
+                    - php-version: '7.2'
                       dependency-versions: 'highest'
 
         steps:
@@ -65,7 +65,7 @@ jobs:
             - name: Install and configure PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '7.1'
+                  php-version: '7.2'
                   tools: 'composer:v2'
                   coverage: none
 
