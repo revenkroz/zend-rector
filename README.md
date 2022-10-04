@@ -2,8 +2,6 @@
 
 This project contains [Rector rules](https://github.com/rectorphp/rector) to update your code from old Zend to not-so-old Zend.
 
-After upgrading, consider using other frameworks, like [Symfony](https://symfony.com/) 😏
-
 ## Install
 
 Install rector and this package:
