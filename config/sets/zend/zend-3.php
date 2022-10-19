@@ -16,12 +16,12 @@ use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddParamTypeDeclaration;
 
 return static function (RectorConfig $rectorConfig): void {
-    /*
-     * Refactor service factory
-     */
     $rectorConfig->ruleWithConfiguration(
         RenameMethodRector::class,
         [
+            /*
+             * Refactor service factory
+             */
             // rename method createService() to __invoke() in FactoryInterface
             new MethodCallRename(
                 'Zend\\ServiceManager\\FactoryInterface',
@@ -35,6 +35,13 @@ return static function (RectorConfig $rectorConfig): void {
                 'canCreateServiceWithName',
                 'canCreate'
             ),
+
+            // rename the method `createServiceWithName()` to `__invoke()` in AbstractFactoryInterface
+            new MethodCallRename(
+                'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
+                'createServiceWithName',
+                '__invoke'
+            ),
         ]
     );
     $rectorConfig->ruleWithConfiguration(
@@ -44,6 +51,18 @@ return static function (RectorConfig $rectorConfig): void {
             new AddParamTypeDeclaration(
                 'Zend\\ServiceManager\\FactoryInterface',
                 '__invoke',
+                0,
+                new ObjectType('Interop\\Container\\ContainerInterface')
+            ),
+            new AddParamTypeDeclaration(
+                'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
+                '__invoke',
+                0,
+                new ObjectType('Interop\\Container\\ContainerInterface')
+            ),
+            new AddParamTypeDeclaration(
+                'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
+                'canCreate',
                 0,
                 new ObjectType('Interop\\Container\\ContainerInterface')
             ),
@@ -65,9 +84,36 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(
         ArgumentAdderRector::class,
         [
+            /*
+             * Service Manager
+             */
+            new ArgumentAdder(
+                'Zend\\ServiceManager\\Factory\\FactoryInterface',
+                '__invoke',
+                0,
+                'container',
+                null,
+                new ObjectType('Interop\\Container\\ContainerInterface')
+            ),
+            new ArgumentAdder(
+                'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
+                '__invoke',
+                0,
+                'container',
+                null,
+                new ObjectType('Interop\\Container\\ContainerInterface')
+            ),
             // add the `$requestedName` as a second argument
             new ArgumentAdder(
                 'Zend\\ServiceManager\\Factory\\FactoryInterface',
+                '__invoke',
+                1,
+                'requestedName',
+                null,
+                new MixedType()
+            ),
+            new ArgumentAdder(
+                'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
                 '__invoke',
                 1,
                 'requestedName',
@@ -83,15 +129,18 @@ return static function (RectorConfig $rectorConfig): void {
                 null,
                 new ArrayType(new MixedType(), new MixedType())
             ),
-        ]
-    );
+            new ArgumentAdder(
+                'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
+                '__invoke',
+                2,
+                'options',
+                null,
+                new ArrayType(new MixedType(), new MixedType())
+            ),
 
-    /*
-     * Refactor event manager
-     */
-    $rectorConfig->ruleWithConfiguration(
-        ArgumentAdderRector::class,
-        [
+            /*
+             * Event manager
+             */
             // add $priority as a second argument
             new ArgumentAdder(
                 'Zend\\EventManager\\ListenerAggregateInterface',
