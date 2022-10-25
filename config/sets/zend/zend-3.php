@@ -14,6 +14,7 @@ use Rector\Renaming\Rector\Namespace_\RenameNamespaceRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddParamTypeDeclaration;
+use Revenkroz\ZendRector\Rector\Zend3\AddModulesToConfigRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(
@@ -76,6 +77,8 @@ return static function (RectorConfig $rectorConfig): void {
             'Zend\\ServiceManager\\AbstractFactoryInterface' => 'Zend\\ServiceManager\\Factory\\AbstractFactoryInterface',
             'Zend\\Mvc\\Router\\Http\\Segment' => 'Zend\\Router\\Http\\Segment',
             'Zend\\Mvc\\Router\\Http\\Literal' => 'Zend\\Router\\Http\\Literal',
+            'Zend\\Mvc\\Service\\TranslatorServiceFactory' => 'Zend\\I18n\\Translator\\TranslatorServiceFactory',
+            'Zend\\Mvc\\Controller\\AbstractConsoleController' => 'Zend\\Mvc\\Console\\Controller\\AbstractConsoleController',
 
             // exceptions
             'Zend\\Mvc\\Router\\Exception\\InvalidArgumentException' => 'Zend\\Router\\Exception\\InvalidArgumentException',
@@ -153,4 +156,5 @@ return static function (RectorConfig $rectorConfig): void {
             ),
         ]
     );
+    $rectorConfig->ruleWithConfiguration(AddModulesToConfigRector::class, AddModulesToConfigRector::COMMON_MODULES);
 };

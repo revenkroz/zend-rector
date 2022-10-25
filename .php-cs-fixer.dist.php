@@ -14,7 +14,7 @@ return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
-        'mb_str_functions' => true,
+        'mb_str_functions' => false,
         'no_php4_constructor' => true,
         'no_unreachable_default_argument_value' => true,
         'no_useless_else' => true,
