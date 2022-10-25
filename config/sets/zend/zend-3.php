@@ -15,6 +15,7 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddParamTypeDeclaration;
 use Revenkroz\ZendRector\Rector\Zend3\AddModulesToConfigRector;
+use Revenkroz\ZendRector\Rector\Zend3\ServiceLocatorToConstructorRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(
@@ -157,4 +158,5 @@ return static function (RectorConfig $rectorConfig): void {
         ]
     );
     $rectorConfig->ruleWithConfiguration(AddModulesToConfigRector::class, AddModulesToConfigRector::COMMON_MODULES);
+    $rectorConfig->rule(ServiceLocatorToConstructorRector::class);
 };
