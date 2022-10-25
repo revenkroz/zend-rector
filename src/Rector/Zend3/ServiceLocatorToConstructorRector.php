@@ -129,10 +129,10 @@ CODE_SAMPLE
                 $this->phpDocTagRemover->removeTagValueFromNode($phpDocInfo, $varTagValueNode);
             }
 
-            $serviceType = new ObjectType($className);
-            $propertyName = $this->propertyNaming->fqnToVariableName($serviceType);
+            $objectType = new ObjectType($className);
+            $propertyName = $this->propertyNaming->fqnToVariableName($objectType);
 
-            $propertyMetadata = new PropertyMetadata($propertyName, $serviceType, Class_::MODIFIER_PRIVATE);
+            $propertyMetadata = new PropertyMetadata($propertyName, $objectType, Class_::MODIFIER_PRIVATE);
             $this->propertyToAddCollector->addPropertyToClass($class, $propertyMetadata);
 
             return $this->nodeFactory->createPropertyFetch('this', $propertyName);
@@ -143,8 +143,8 @@ CODE_SAMPLE
 
     private function checkNode(Node $node): bool
     {
-        $pp = new Standard();
-        $code = $pp->prettyPrint([$node]);
+        $standard = new Standard();
+        $code = $standard->prettyPrint([$node]);
         $thisCall = 0 === strpos($code, '$this->');
 
         return

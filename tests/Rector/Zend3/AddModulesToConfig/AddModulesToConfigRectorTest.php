@@ -2,22 +2,28 @@
 
 namespace Revenkroz\ZendRector\Tests\Rector\Zend3\AddModulesToConfig;
 
+use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 class AddModulesToConfigRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData()
      */
-    public function test(string $file): void
+    public function test($file): void
     {
-        $this->doTestFile($file);
+        if ($file instanceof SmartFileInfo) {
+            $this->doTestFileInfo($file);
+        } else {
+            $this->doTestFile($file);
+        }
     }
 
     /**
-     * @return \Iterator<string>
+     * @return Iterator<string>
      */
-    public function provideData(): \Iterator
+    public function provideData(): Iterator
     {
         return $this->yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }

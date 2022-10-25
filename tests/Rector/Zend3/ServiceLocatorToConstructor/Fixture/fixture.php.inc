@@ -23,9 +23,13 @@ namespace Revenkroz\ZendRector\Tests\Rector\Zend3\ServiceLocatorToConstructor\Fi
 
 final class MyController
 {
-    /** @var DocumentService */
+    /**
+     * @var \Revenkroz\ZendRector\Tests\Rector\Zend3\ServiceLocatorToConstructor\Fixture\DocumentService
+     */
     private $documentService;
-    /** @var PaperService */
+    /**
+     * @var \Revenkroz\ZendRector\Tests\Rector\Zend3\ServiceLocatorToConstructor\Fixture\PaperService
+     */
     private $paperService;
     public function __construct(\Revenkroz\ZendRector\Tests\Rector\Zend3\ServiceLocatorToConstructor\Fixture\DocumentService $documentService, \Revenkroz\ZendRector\Tests\Rector\Zend3\ServiceLocatorToConstructor\Fixture\PaperService $paperService)
     {

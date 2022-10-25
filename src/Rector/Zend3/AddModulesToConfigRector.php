@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Scalar\String_;
+use PhpParser\Node\Stmt\Return_;
 use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
@@ -80,7 +81,7 @@ CODE_SAMPLE
 
         // process only files with first level return array
         foreach ($node->stmts as $stmt) {
-            if (!$stmt instanceof Node\Stmt\Return_) {
+            if (!$stmt instanceof Return_) {
                 continue;
             }
 
@@ -107,9 +108,9 @@ CODE_SAMPLE
             }
 
             $config = null;
-            $configItem = $this->extractArrayItemByKey($node, 'modules');
-            if (null !== $configItem) {
-                $config = $configItem->value;
+            $arrayItem = $this->extractArrayItemByKey($node, 'modules');
+            if (null !== $arrayItem) {
+                $config = $arrayItem->value;
                 if (!$config instanceof Array_) {
                     return null;
                 }
